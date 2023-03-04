@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Список книг для бібліотеки</title>
+  <style>
+    table, th, tr, td {border: 1px solid black;}
+  </style>
+</head>
+
+<h2>Інформація про книги </h2>
+
+<table>
+  <thead>
+  <th>Назва книги</th>
+  <th>Автор</th>
+  <th>Опис</th>
+  <th>Чи прочитана</th>
+  <th>Планова дата читання</th>
+
+  </thead>
+{% for book in books %}
+  <tr>
+    <td><a href="/books/{{ loop.index }}">{{ book.title }}</a></td> 
+    <td>{{ book.autor }}</td>
+    <td>{{ book.description }}</td>
+    <td>{{ book.done }}</td>
+    <td>{{ book.date }}</td>
+  </tr>
+{% endfor %}
+</table>
+<div>
+  <h2> Додай нову книгу: </h2>
+  <form method="POST" action="/books/">
+    {{ form.hidden_tag() }}
+    <table>
+      {% for field in form if field.widget.input_type != 'hidden' %}
+        <tr>
+          <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+          <td>{{ field }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <input type="submit" value="Go">
+  </form>
+</div>
+</body>
+</html>
